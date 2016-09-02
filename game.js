@@ -12,6 +12,9 @@ var boundsAnchorLeft;
 var boundsAnchorRight;
 var boundsCollisionGroup;
 
+const GRAVITY_AMOUNT = 3000;
+const BALL_SHOOT_FORCE = 1700;
+
 function drawRectangle(x, y, width, height, color) {
     var rect = game.add.bitmapData(width, height);
     rect.ctx.beginPath();
@@ -28,7 +31,7 @@ function preload() {
 function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
-    game.physics.p2.gravity.y = 2000;
+    game.physics.p2.gravity.y = GRAVITY_AMOUNT;
     game.physics.p2.restitution = 0.8;
 
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -121,8 +124,8 @@ function touchUp(pointer) {
         Phaser.Point.normalize(direction, direction);
 
         if (direction.y < 0) {
-            ball.body.velocity.x = direction.x * 1400;
-            ball.body.velocity.y = direction.y * 1400;
+            ball.body.velocity.x = direction.x * BALL_SHOOT_FORCE;
+            ball.body.velocity.y = direction.y * BALL_SHOOT_FORCE;
 
             isShootingBall = true;
         }
