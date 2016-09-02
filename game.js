@@ -46,14 +46,14 @@ function create() {
 
 	game.stage.backgroundColor = '#124184';
 
-    boundsAnchorLeft = drawRectangle(game.world.centerX - 55, game.world.centerY - 100, 5, 5, "#aaa");
+    boundsAnchorLeft = drawRectangle(game.world.centerX - 60, game.world.centerY - 100, 5, 5, "#aaa");
     game.physics.p2.enable(boundsAnchorLeft);
     boundsAnchorLeft.body.static = true;
     boundsAnchorLeft.body.setRectangle(5, 5);
     boundsAnchorLeft.body.collides(ballCollisionGroup);
     boundsAnchorLeft.body.setCollisionGroup(boundsCollisionGroup);
 
-    boundsAnchorRight = drawRectangle(game.world.centerX + 55, game.world.centerY - 100, 5, 5, "#aaa");
+    boundsAnchorRight = drawRectangle(game.world.centerX + 70, game.world.centerY - 100, 5, 5, "#aaa");
     game.physics.p2.enable(boundsAnchorRight);
     boundsAnchorRight.body.static = true;
     boundsAnchorRight.body.setRectangle(5, 5);
