@@ -1,4 +1,4 @@
-var game = new Phaser.Game(380, 600, Phaser.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(480, 800, Phaser.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
 var ball;
 var isTrackDragging = false;
 var isShootingBall = false;
@@ -29,6 +29,12 @@ function create() {
     game.physics.p2.setImpactEvents(true);
     game.physics.p2.gravity.y = 1600;
     game.physics.p2.restitution = 0.8;
+
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.scale.minWidth = 480;
+    game.scale.minHeight = 800;
+    game.scale.maxWidth = 1440;
+    game.scale.maxHeight = 2560;
 
     var ballCollisionGroup = game.physics.p2.createCollisionGroup();
     var goalCollisionGroup = game.physics.p2.createCollisionGroup();
