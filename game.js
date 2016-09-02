@@ -12,9 +12,9 @@ var boundsAnchorLeft;
 var boundsAnchorRight;
 var boundsCollisionGroup;
 
-const GRAVITY_AMOUNT = 5000;
+const GRAVITY_AMOUNT = 3000;
 const GRAVITY_ADJUST_AMOUNT = 150;
-const BALL_SHOOT_FORCE = 2200;
+const BALL_SHOOT_FORCE = 1700;
 
 function drawRectangle(x, y, width, height, color) {
     var rect = game.add.bitmapData(width, height);
@@ -61,10 +61,10 @@ function create() {
     boundsAnchorRight.body.collides(ballCollisionGroup);
     boundsAnchorRight.body.setCollisionGroup(boundsCollisionGroup);
 
-    var goalDetectionLine = drawRectangle(game.world.centerX, game.world.centerY - 50, 100, 50, "#124184");
+    var goalDetectionLine = drawRectangle(game.world.centerX, game.world.centerY - 50, 100, 10, "#124184");
     game.physics.p2.enable(goalDetectionLine);
     goalDetectionLine.body.static = true;
-    goalDetectionLine.body.setRectangle(140, 50);
+    goalDetectionLine.body.setRectangle(140, 10);
     goalDetectionLine.body.setCollisionGroup(goalCollisionGroup);
     goalDetectionLine.body.collides(ballCollisionGroup);
     goalDetectionLine.body.data.shapes[0].sensor = true;
@@ -100,10 +100,10 @@ function update() {
             return;
         }
 
-        if (ball.position.x < game.world.centerX) {
+        if (ball.position.x < game.world.centerX - 10) {
             game.physics.p2.gravity.x = GRAVITY_ADJUST_AMOUNT;
             console.log("Add gravity to RIGHT");
-        } else if (ball.position.x > game.world.centerX) {
+        } else if (ball.position.x > game.world.centerX + 10) {
             game.physics.p2.gravity.x = -GRAVITY_ADJUST_AMOUNT;
             console.log("Add gravity to LEFT");
         } else {
