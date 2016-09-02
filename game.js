@@ -87,7 +87,8 @@ function create() {
 
 function update() {
     if (isShootingBall) {
-        if (ball.position.y < 100) {
+        if (ball.position.y < 185) {
+            console.log(ball.position);
             ball.body.data.shapes[0].sensor = false;
             isFallingBall = true;
         }
