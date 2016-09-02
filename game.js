@@ -13,6 +13,7 @@ var boundsAnchorRight;
 var boundsCollisionGroup;
 
 const GRAVITY_AMOUNT = 3000;
+const GRAVITY_ADJUST_AMOUNT = 150;
 const BALL_SHOOT_FORCE = 1700;
 
 function drawRectangle(x, y, width, height, color) {
@@ -98,6 +99,16 @@ function update() {
 
             return;
         }
+
+        if (ball.position.x < game.world.centerX) {
+            game.physics.p2.gravity.x = GRAVITY_ADJUST_AMOUNT;
+            console.log("Add gravity to RIGHT");
+        } else if (ball.position.x > game.world.centerX) {
+            game.physics.p2.gravity.x = -GRAVITY_ADJUST_AMOUNT;
+            console.log("Add gravity to LEFT");
+        } else {
+            game.physics.p2.gravity.x = 0;
+        }
     }
     
     if (ball.position.y > 1000) {
@@ -157,7 +168,6 @@ function resetGame() {
 }
 
 function onBeginContact(body2, shapeA, shapeB, equation) {
-    console.log("onBeginContact : isFallingBall=" + isFallingBall);
     if (isFallingBall) {
         console.log("Goal!");
         isGoalSuccess = true;
