@@ -27,7 +27,7 @@ function preload() {
 function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
-    game.physics.p2.gravity.y = 1600;
+    game.physics.p2.gravity.y = 2000;
     game.physics.p2.restitution = 0.8;
 
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -56,7 +56,7 @@ function create() {
     boundsAnchorRight.body.collides(ballCollisionGroup);
     boundsAnchorRight.body.setCollisionGroup(boundsCollisionGroup);
 
-    var goalDetectionLine = drawRectangle(game.world.centerX, game.world.centerY - 80, 100, 5, "#124184");
+    var goalDetectionLine = drawRectangle(game.world.centerX, game.world.centerY - 50, 100, 5, "#124184");
     game.physics.p2.enable(goalDetectionLine);
     goalDetectionLine.body.static = true;
     goalDetectionLine.body.setRectangle(100, 5);
@@ -88,7 +88,6 @@ function create() {
 function update() {
     if (isShootingBall) {
         if (ball.position.y < 185) {
-            console.log(ball.position);
             ball.body.data.shapes[0].sensor = false;
             isFallingBall = true;
         }
@@ -121,8 +120,8 @@ function touchUp(pointer) {
         Phaser.Point.normalize(direction, direction);
 
         if (direction.y < 0) {
-            ball.body.velocity.x = direction.x * 1200;
-            ball.body.velocity.y = direction.y * 1200;
+            ball.body.velocity.x = direction.x * 1400;
+            ball.body.velocity.y = direction.y * 1400;
 
             isShootingBall = true;
         }
