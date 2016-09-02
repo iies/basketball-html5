@@ -46,7 +46,7 @@ function create() {
 
 	game.stage.backgroundColor = '#124184';
 
-    boundsAnchorLeft = drawRectangle(game.world.centerX - 60, game.world.centerY - 100, 5, 5, "#aaa");
+    boundsAnchorLeft = drawRectangle(game.world.centerX - 70, game.world.centerY - 100, 5, 5, "#aaa");
     game.physics.p2.enable(boundsAnchorLeft);
     boundsAnchorLeft.body.static = true;
     boundsAnchorLeft.body.setRectangle(5, 5);
@@ -60,14 +60,14 @@ function create() {
     boundsAnchorRight.body.collides(ballCollisionGroup);
     boundsAnchorRight.body.setCollisionGroup(boundsCollisionGroup);
 
-    var goalDetectionLine = drawRectangle(game.world.centerX, game.world.centerY - 50, 100, 5, "#124184");
+    var goalDetectionLine = drawRectangle(game.world.centerX, game.world.centerY - 50, 100, 10, "#124184");
     game.physics.p2.enable(goalDetectionLine);
     goalDetectionLine.body.static = true;
-    goalDetectionLine.body.setRectangle(100, 5);
+    goalDetectionLine.body.setRectangle(140, 10);
     goalDetectionLine.body.setCollisionGroup(goalCollisionGroup);
     goalDetectionLine.body.collides(ballCollisionGroup);
     goalDetectionLine.body.data.shapes[0].sensor = true;
-    goalDetectionLine.body.onBeginContact.add(onBeginContact);
+    goalDetectionLine.body.onBeginContact.add(onBeginContact, this);
 
     ball = game.add.sprite(game.world.centerX, game.world.centerY + 200, 'ball');
     game.physics.p2.enable(ball);
@@ -91,19 +91,20 @@ function create() {
 
 function update() {
     if (isShootingBall) {
-        if (ball.position.y < 185) {
+        if (ball.position.y < 190) {
             ball.body.data.shapes[0].sensor = false;
+            ball.body.updateCollisionMask();
             isFallingBall = true;
-        }
-        else if (ball.position.y > 1000) {
-            isShootingBall = false;
-            ball.body.data.shapes[0].sensor = true;
-            resetGame();
-        }
 
-        ball.body.updateCollisionMask();
+            return;
+        }
     }
     
+    if (ball.position.y > 1000) {
+        isShootingBall = false;
+        ball.body.data.shapes[0].sensor = true;
+        resetGame();
+    }
 }
 
 function touchDown(pointer) {
@@ -156,11 +157,13 @@ function resetGame() {
 }
 
 function onBeginContact(body2, shapeA, shapeB, equation) {
+    console.log("onBeginContact : isFallingBall=" + isFallingBall);
     if (isFallingBall) {
         console.log("Goal!");
         isGoalSuccess = true;
     }
     
+    return true;
 }
 
 function render() {
