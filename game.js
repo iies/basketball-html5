@@ -6,6 +6,7 @@ var isFallingBall = false;
 var isGoalSuccess = false;
 var lastPointerPos = {};
 var gameScore = 0;
+var bestScore = 0;
 
 var boundsAnchorLeft;
 var boundsAnchorRight;
@@ -134,6 +135,9 @@ function resetGame() {
     if (isGoalSuccess) {
         gameScore++;
     } else {
+        if (gameScore > bestScore) {
+            bestScore = gameScore;
+        }
         gameScore = 0;
     }
 
@@ -157,5 +161,6 @@ function onBeginContact(body2, shapeA, shapeB, equation) {
 }
 
 function render() {
-    game.debug.text('Score: ' + gameScore, 32, 32);
+    game.debug.text("Score: " + gameScore, 32, 32);
+    game.debug.text("Best: " + bestScore, 41, 60);
 }
