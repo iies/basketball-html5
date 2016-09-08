@@ -27,6 +27,9 @@ function drawRectangle(x, y, width, height, color) {
 
 function preload() {
     game.load.image('ball', 'images/ball.png');
+    game.load.image('board_back', 'images/board_back.png');
+    game.load.image('board_left_anchor', 'images/board_left_anchor.png');
+    game.load.image('board_right_anchor', 'images/board_right_anchor.png');
 }
 
 function create() {
@@ -45,23 +48,26 @@ function create() {
     var goalCollisionGroup = game.physics.p2.createCollisionGroup();
     boundsCollisionGroup = game.physics.p2.createCollisionGroup();
 
+    var board = game.add.sprite(game.world.centerX, game.world.centerY - 150, 'board_back');
+    board.anchor.set(0.5);
+
 	game.stage.backgroundColor = '#124184';
 
-    boundsAnchorLeft = drawRectangle(game.world.centerX - 70, game.world.centerY - 100, 5, 5, "#aaa");
+    boundsAnchorLeft = drawRectangle(game.world.centerX - 70, game.world.centerY - 100, 5, 5, "rgba(255, 255, 255, 0)");
     game.physics.p2.enable(boundsAnchorLeft);
     boundsAnchorLeft.body.static = true;
     boundsAnchorLeft.body.setRectangle(5, 5);
     boundsAnchorLeft.body.collides(ballCollisionGroup);
     boundsAnchorLeft.body.setCollisionGroup(boundsCollisionGroup);
 
-    boundsAnchorRight = drawRectangle(game.world.centerX + 70, game.world.centerY - 100, 5, 5, "#aaa");
+    boundsAnchorRight = drawRectangle(game.world.centerX + 70, game.world.centerY - 100, 5, 5, "rgba(255, 255, 255, 0)");
     game.physics.p2.enable(boundsAnchorRight);
     boundsAnchorRight.body.static = true;
     boundsAnchorRight.body.setRectangle(5, 5);
     boundsAnchorRight.body.collides(ballCollisionGroup);
     boundsAnchorRight.body.setCollisionGroup(boundsCollisionGroup);
 
-    var goalDetectionLine = drawRectangle(game.world.centerX, game.world.centerY - 50, 100, 10, "#124184");
+    var goalDetectionLine = drawRectangle(game.world.centerX, game.world.centerY - 50, 100, 10, "rgba(255, 255, 255, 0)");
     game.physics.p2.enable(goalDetectionLine);
     goalDetectionLine.body.static = true;
     goalDetectionLine.body.setRectangle(140, 10);
