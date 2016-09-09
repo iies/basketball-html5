@@ -11,6 +11,7 @@ var bestScore = 0;
 var boundsAnchorLeft;
 var boundsAnchorRight;
 var boundsCollisionGroup;
+var boardRingFront;
 
 const GRAVITY_AMOUNT = 3000;
 const GRAVITY_ADJUST_AMOUNT = 150;
@@ -28,8 +29,7 @@ function drawRectangle(x, y, width, height, color) {
 function preload() {
     game.load.image('ball', 'images/ball.png');
     game.load.image('board_back', 'images/board_back.png');
-    game.load.image('board_left_anchor', 'images/board_left_anchor.png');
-    game.load.image('board_right_anchor', 'images/board_right_anchor.png');
+    game.load.image('board_front_ring', 'images/board_front_ring.png');
 }
 
 function create() {
@@ -50,6 +50,9 @@ function create() {
 
     var board = game.add.sprite(game.world.centerX, game.world.centerY - 150, 'board_back');
     board.anchor.set(0.5);
+
+    var boardRing = game.add.sprite(game.world.centerX, game.world.centerY - 100, 'board_front_ring');
+    boardRing.anchor.set(0.5);
 
 	game.stage.backgroundColor = '#124184';
 
@@ -89,6 +92,10 @@ function create() {
     ball.body.collides([ boundsCollisionGroup, goalCollisionGroup ]);
     ball.body.data.shapes[0].sensor = true;
 
+    boardRingFront = game.add.sprite(game.world.centerX, game.world.centerY - 100, 'board_front_ring');
+    boardRingFront.anchor.set(0.5);
+    boardRingFront.visible = false;
+
     Phaser.Canvas.setTouchAction(this.game.canvas, 'auto');
     game.input.touch.preventDefault = true;
 
@@ -102,6 +109,7 @@ function update() {
             ball.body.data.shapes[0].sensor = false;
             ball.body.updateCollisionMask();
             isFallingBall = true;
+            boardRingFront.visible = true;
 
             return;
         }
@@ -166,6 +174,8 @@ function resetGame() {
     ball.body.setZeroRotation();
     ball.body.static = true;
     ball.body.reset(game.world.centerX, game.world.centerY + 200, true, true);
+
+    boardRingFront.visible = false;
 
     isTrackDragging = false;
     isShootingBall = false;
